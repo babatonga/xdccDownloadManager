@@ -147,8 +147,8 @@ class XDCCServerListener():
         if self.bot:
             try:
                 self.bot.quit("Stopping client")
-                self.bot.loop.call_soon_threadsafe(self.loop.stop)
-                self.bot.loop.call_soon_threadsafe(self.loop.close)
+                self.bot.loop.call_soon_threadsafe(self.bot.loop.stop)
+                self.bot.loop.call_soon_threadsafe(self.bot.loop.close)
             except Exception as e:
                 logger.error(f"Error stopping IRC client: {e}")
         if self.loop:
