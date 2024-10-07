@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+    Login
+{% endblock title %}
+{% block content %}
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <form class="form-signin" method="post">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endfor %}
+            {% endif %}
+            {% for field in form %}
+                <p class="alert-danger">{{ field.errors }}</p>
+                <div class="form-floating">
+                    <input id="{{ field.auto_id }}"
+                           name="{{ field.html_name }}"
+                           class="form-control"
+                           {% if field.label == "Email" %}type="email"{% else %}type="{{ field.field.widget.input_type }}"{% endif %}
+                           required
+                           {% if field.label == "Email" %}autofocus{% endif %}>
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                </div>
+            {% endfor %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </div>
+{% endblock content %}

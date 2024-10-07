@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      {% block title %}
+        XDCC Download Manager
+      {% endblock title %}
+    </title>
+    <link href="{% static 'libs/css/bootstrap.min.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <script src="{% static 'libs/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'libs/js/jquery-3.7.1.min.js' %}"></script>
+    <div class="modal" tabindex="-1" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal modal-lg"
+         tabindex="-2"
+         id="loadingModal"
+         data-bs-backdrop="static"
+         data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <center>
+              <h4>Modal body text goes here.</h4>
+            </center>
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-container position-absolute top-0 end-0 p-3"
+         id="toastcontainer"></div>
+    <div class="maincontainer">
+      {% if request.user.is_authenticated %}
+        <script>
+            var csrftoken = '{{ csrf_token }}';
+      try {
+        var userlang = navigator.language || navigator.userLanguage;
+        var userlangTwo = userlang.split("-")[0];
+        var client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } catch (e) {
+        var userlang = 'en-US';
+        var userlangTwo = 'en';
+        var client_timezone = 'UTC';
+      }
+        </script>
+      {% endif %}
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </body>
+</html>
